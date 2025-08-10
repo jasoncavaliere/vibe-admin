@@ -3,12 +3,18 @@ using System.Reflection;
 using Admin.Api.Models;
 using Admin.Api.Infrastructure.Mediator;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Add Application Insights telemetry
+builder.Services.AddApplicationInsightsTelemetry();
+// Register ConsoleTelemetryProcessor for local console output
+builder.Services.AddApplicationInsightsTelemetryProcessor<ConsoleTelemetryProcessor>();
 
 // Register Mediator
 builder.Services.AddScoped<IMediator, Mediator>();
