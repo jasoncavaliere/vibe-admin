@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Admin.Api.Models;
 
 namespace Admin.Api.Controllers
 {
@@ -23,10 +24,5 @@ namespace Admin.Api.Controllers
                 ))
                 .ToArray();
         }
-    }
-
-    public record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
