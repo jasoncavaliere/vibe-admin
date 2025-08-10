@@ -17,7 +17,7 @@ public class ListMeasuresByTenantResponse
 
 public class Measure
 {
-    public string Name { get; set; }
-    public double Value { get; set; }
-    public string Unit { get; set; }
+    public required string Name { get; set; }
+    public required double Value { get; set; }
+    public required string Unit { get; set; }
 }

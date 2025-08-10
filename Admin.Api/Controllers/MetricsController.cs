@@ -17,7 +17,7 @@ namespace Admin.Api.Controllers
 
        
         [HttpGet("list-by-tenant")]
-        public async Task<IActionResult> ListByTenant([FromQuery] string sourceTenant, [FromQuery] string sourceSlot)
+        public async Task<IActionResult> ListByTenant([FromQuery] string sourceTenant="", [FromQuery] string sourceSlot="")
         {
             var request = new ListMeasuresByTenantRequest
             {
