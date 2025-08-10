@@ -1,6 +1,6 @@
 namespace Admin.Api.Models
 {
-    public enum Result
+    public enum OperationState
     {
         Success,
         Warning,

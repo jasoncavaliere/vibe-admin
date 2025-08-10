@@ -1,9 +1,6 @@
 
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using System.Linq;
-using System;
-using Admin.Api.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

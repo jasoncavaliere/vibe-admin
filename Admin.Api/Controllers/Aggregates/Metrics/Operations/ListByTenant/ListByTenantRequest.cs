@@ -1,22 +1,22 @@
-public class ListByTenantRequest : IRequest<MeasureList>
+using Admin.Api.Models;
+
+namespace Admin.Api.Controllers.Aggregates.Metrics.Operations.ListByTenant;
+
+public class ListMeasuresByTenantHandler : BaseHandler<ListMeasuresByTenantRequest, ListMeasuresByTenantResponse>
 {
-    public string TenantId { get; set; } = "";
-    public string SlotId { get; set; } = "";
+    public override Task<OperationResult<ListMeasuresByTenantResponse>> Handle(ListMeasuresByTenantRequest request)
+    {
+             // Example: return a static list for demonstration
+        var result = new ListMeasuresByTenantResponse();
+        result.SourceSlot = request.SourceSlot;
+        result.SourceTenant = request.SourceTenant;
+        result.Measures = new List<Measure>
+        {
+            new Measure { Name = "CPU", Value = 0.75, Unit = "%" },
+            new Measure { Name = "Memory", Value = 2048, Unit = "MB" },
+            new Measure { Name = "Disk", Value = 120, Unit = "GB" }
+        };
+
+        return Success(result);
+    }
 }
-
-
-    public class MeasureList
-    {
-        public IList<Measure> Measures { get; set; } = new List<Measure>();
-        public string SourceTenant { get; set; } = "";
-        public string SourceSlot { get; set; } = "";
-    }
-
-
-    public class Measure
-    {
-        public string? Name { get; set; }
-        public double Value { get; set; }
-        public string? Unit { get; set; }
-    }
-

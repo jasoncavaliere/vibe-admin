@@ -1,7 +1,0 @@
-namespace Admin.Api.Models
-{
-
-
-}
-
-

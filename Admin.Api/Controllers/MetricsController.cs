@@ -1,6 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
-using Admin.Api.Models;
+using Admin.Api.Controllers.Aggregates.Metrics.Operations.ListByTenant;
 
 namespace Admin.Api.Controllers
 {
