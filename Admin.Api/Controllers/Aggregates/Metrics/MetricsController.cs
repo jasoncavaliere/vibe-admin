@@ -8,10 +8,10 @@ namespace Admin.Api.Controllers
     [Route("api/[controller]")]
     public class MetricsController : ControllerBase
     {
-    private readonly IMediator _mediator;
-    private readonly ILogger<MetricsController> _logger;
+        private readonly IMediator _mediator;
+        private readonly ILogger<MetricsController> _logger;
 
-        public MetricsController(IMediator mediator, ILogger<MetricsController> logger, Microsoft.ApplicationInsights.TelemetryClient telemetryClient)
+        public MetricsController(IMediator mediator, ILogger<MetricsController> logger)
         {
             _mediator = mediator;
             _logger = logger;

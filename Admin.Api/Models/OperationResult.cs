@@ -10,6 +10,12 @@ namespace Admin.Api.Models
         {
             return new OperationResult<T> { State = OperationState.Success, Data = data, Messages = Array.Empty<Message>() };
         }
+
+
+        public static OperationResult<T> Failure(OperationState state = OperationState.Error, Message[] messages = null)
+        {
+            return new OperationResult<T> { State = state, Data = default(T), Messages = messages ?? Array.Empty<Message>() };
+        }
     }
 }
 

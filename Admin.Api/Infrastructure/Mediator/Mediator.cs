@@ -11,45 +11,41 @@ public class Mediator : IMediator
         _serviceProvider = serviceProvider;
     }
 
-    public void writeTelemtry(Microsoft.ApplicationInsights.TelemetryClient client, String operation, String requestType, String handlerType){
-         
-        client.TrackEvent( operation, new Dictionary<string, string>{
-            { "RequestType", requestType },
-            { "HandlerType", handlerType }
-        });
-    }
-
-
     public async Task<OperationResult<TResponse>> Send<TResponse>(IRequest<TResponse> request)
     {
+        var decorators = DecoratorFactory.Build(_serviceProvider);
         var requestType = request.GetType();
         var handlerType = typeof(IRequestHandler<,>).MakeGenericType(requestType, typeof(TResponse));
         var validatorType = typeof(IValidator<,>).MakeGenericType(requestType, typeof(TResponse));
         dynamic? validator = _serviceProvider.GetService(validatorType);
         var client = _serviceProvider.GetService<Microsoft.ApplicationInsights.TelemetryClient>();
-       writeTelemtry(client,"OperationValidation::Start", requestType.Name,handlerType.Name);
-        if (validator != null)
-        {
-            var vResult = await validator.Validate((dynamic)request);
-            if(vResult.State == OperationState.Error || vResult.State==OperationState.Exception)
+
+        // Validation pipeline
+        Func<Task<OperationResult<TResponse>>> pipeline = async () => {
+            if (validator != null)
             {
-                writeTelemtry(client,"OperationValidation::Failure", requestType.Name,handlerType.Name);
-                return vResult;
+                var vResult = await validator.Validate((dynamic)request);
+                if(vResult.State == OperationState.Error || vResult.State==OperationState.Exception)
+                {
+                    return vResult;
+                }
             }
-        }
-        writeTelemtry(client,"OperationValidation::Success", requestType.Name,handlerType.Name);
-        writeTelemtry(client,"OperationHandler::Start", requestType.Name,handlerType.Name);
-        
-        dynamic? handler = _serviceProvider.GetService(handlerType);
-        if (handler is null)
-        {                
+            dynamic? handler = _serviceProvider.GetService(handlerType);
+            if (handler is null)
+            {
+                throw new InvalidOperationException($"Handler for {requestType.Name} not registered.");
+            }
+            return await handler.Handle((dynamic)request);
+        };
 
-            writeTelemtry(client,"OperationHandler::Fail", requestType.Name,handlerType.Name);
-            throw new InvalidOperationException($"Handler for {requestType.Name} not registered.");
+        // Apply decorators in order
+        foreach (var decorator in decorators)
+        {
+            var next = pipeline;
+            pipeline = () => decorator.Handle<TResponse>(request, next);
         }
 
-        var result = await handler.Handle((dynamic)request); 
-        writeTelemtry(client,"OperationHandler::Complete", requestType.Name,handlerType.Name);
+        var result = await pipeline();
         return result;
     }
 }

@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 // Add Application Insights telemetry
 builder.Services.AddApplicationInsightsTelemetry();
 // Register ConsoleTelemetryProcessor for local console output
-builder.Services.AddApplicationInsightsTelemetryProcessor<ConsoleTelemetryProcessor>();
+
 
 // Register Mediator
 builder.Services.AddScoped<IMediator, Mediator>();
