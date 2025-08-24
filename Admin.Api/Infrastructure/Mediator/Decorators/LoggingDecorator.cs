@@ -1,3 +1,5 @@
+namespace Admin.Api.Infrastructure.Mediator.Decorators;
+
 using Admin.Api.Models;
 using System;
 using System.Threading.Tasks;

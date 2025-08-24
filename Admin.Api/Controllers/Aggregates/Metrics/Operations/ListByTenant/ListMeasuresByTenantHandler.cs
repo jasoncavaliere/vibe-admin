@@ -1,4 +1,5 @@
 using Admin.Api.Models;
+using Admin.Api.Infrastructure.Mediator;
 
 namespace Admin.Api.Controllers.Aggregates.Metrics.Operations.ListByTenant;
 

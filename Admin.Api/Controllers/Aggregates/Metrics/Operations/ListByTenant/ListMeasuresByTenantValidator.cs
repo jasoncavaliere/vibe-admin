@@ -2,6 +2,7 @@ using Admin.Api.Infrastructure.Mediator;
 using Admin.Api.Models;
 using System.Threading.Tasks;
 
+namespace Admin.Api.Controllers.Aggregates.Metrics.Operations.ListByTenant;
 
 
 public class ListMeasuresByTenantValidator : BaseValidator<ListMeasuresByTenantRequest, ListMeasuresByTenantResponse>

@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Admin.Api.Controllers.Aggregates.Metrics.Operations.ListByTenant;
+using Admin.Api.Infrastructure.Mediator;
 
 namespace Admin.Api.Controllers
 {

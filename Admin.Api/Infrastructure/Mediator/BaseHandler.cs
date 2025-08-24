@@ -1,16 +1,16 @@
-namespace Admin.Api.Models
-{
+using Admin.Api.Models;
+
+namespace Admin.Api.Infrastructure.Mediator;
     public abstract class BaseHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
-{
-    public abstract Task<OperationResult<TResponse>> Handle(TRequest request);
-
-
-    internal async Task<OperationResult<TResponse>> Success(TResponse result)
+        where TRequest : IRequest<TResponse>
     {
-        return await Task.FromResult(OperationResult<TResponse>.Success(result));
+        public abstract Task<OperationResult<TResponse>> Handle(TRequest request);
+
+        internal async Task<OperationResult<TResponse>> Success(TResponse result)
+        {
+            return await Task.FromResult(OperationResult<TResponse>.Success(result));
+        }
     }
-}
-}
+
 
 
