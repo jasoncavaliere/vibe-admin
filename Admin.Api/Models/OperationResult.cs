@@ -12,7 +12,7 @@ namespace Admin.Api.Models
         }
 
 
-        public static OperationResult<T> Failure(OperationState state = OperationState.Error, Message[] messages = null)
+        public static OperationResult<T> Failure(OperationState state, Message[] messages)
         {
             return new OperationResult<T> { State = state, Data = default(T), Messages = messages ?? Array.Empty<Message>() };
         }

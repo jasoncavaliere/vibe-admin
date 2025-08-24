@@ -9,8 +9,8 @@ public class ListMeasuresByTenantValidator : BaseValidator<ListMeasuresByTenantR
 { 
    public override  Message[] GetMessages(ListMeasuresByTenantRequest request){
         return new ValidationMessageBuilder()
-            .WithNullEmpty(request.SourceTenant,OperationState.Error,"You must specify SourceTenant")
-            .WithNullEmpty(request.SourceSlot,OperationState.Error,"You must specify SourceSlot")
+            .WithNullEmpty(request.SourceTenant,OperationState.Error,"You must specify Tenant")
+            .WithNullEmpty(request.SourceSlot,OperationState.Error,"You must specify Slot")
         .Build();
    }
 }
